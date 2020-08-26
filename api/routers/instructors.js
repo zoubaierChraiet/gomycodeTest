@@ -20,7 +20,7 @@ router.post("/new" , (req,res) => {
         name : req.body.name ,
         subscriptionDate : req.body.subscriptionDate,
         timeTable : req.body.timeTable ,
-        NumberOfStacks : req.body.NumberOfStacks
+        numberOfStacks : req.body.numberOfStacks
     })
     newInstructor.save()
     .then(instructor => {
@@ -56,6 +56,19 @@ router.delete("/delete/:id" , (req,res) => {
     })
 })
 
+router.get("/:id" , (req,res) => {
+    Instructor.findById({_id : req.params.id})
+    .then(instructor => {
+        if(instructor) {
+            res.status(200).json(instructor)
+        } else {
+            res.status(404).json({error : "instructor not found"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
 
 module.exports = router
 

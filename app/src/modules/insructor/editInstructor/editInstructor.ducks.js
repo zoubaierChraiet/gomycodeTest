@@ -13,20 +13,30 @@ const loading = (state=true,{type,payload}) => {
     }
 }
 
-combineReducers({
-    loading 
+const instructor = (state=null,{type,payload}) => {
+    switch (type)  {
+        case FETCH_INSTRUCTOR :
+            return payload
+        default : 
+        return state
+    }
+}
+
+export default combineReducers({
+    loading ,
+    instructor
 })
 
 export const fetchInstructor = (id) => async dispatsh => {
     const instructor = await axios.get(`/instructors/${id}`)
     dispatsh({
         type : FETCH_INSTRUCTOR ,
-        payload : instructor
+        payload : instructor.data
     })
 }
 
 export const editInstructor = (instructor,id) => async dispatsh => {
-    const instructor = await axios.post(`/instructors/${id}`,instructor)
+    const instructor = await axios.post(`/instructors/edit/${id}`,instructor)
     dispatsh({
         type : EDIT_INSTRUCTOR ,
         payload : instructor

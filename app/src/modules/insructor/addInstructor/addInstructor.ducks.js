@@ -15,9 +15,9 @@ const loading = (state=true,{type}) => {
 }
 
 export const addInstructor = (instructor) => async dispatsh => {
-    const instructor = await axios.post(`/instructors`,instructor)
+    const inst = await axios.post(`/instructors/new`,instructor)
     dispatsh({
         type : ADD_INSTRUCTOR ,
-        payload : instructor
+        payload : inst
     })
 }

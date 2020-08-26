@@ -1,10 +1,10 @@
 import React,{useState} from 'react'
 import { connect } from 'react-redux'
-import {Form , Input,Button ,Checkbox, DatePicker} from "antd"
+import {Form , Input,Button ,Col, DatePicker, Row} from "antd"
 
 import {addInstructor} from "./addInstructor.ducks"
 
-export const AddInstructor = ({addInstructor}) => {
+export const AddInstructor = ({addInstructor , history}) => {
     
     const [name,setName] = useState("")
     const [subscriptionDate,setSubscriptionDate] = useState("")
@@ -16,45 +16,59 @@ export const AddInstructor = ({addInstructor}) => {
             name,
             subscriptionDate,
             timeTable,
-            numberOfStacks
+            numberOfStacks : parseInt(numberOfStacks)
         }
         addInstructor(newInstructor) ;
+        history.push('/')
     }
 
     return (
+
         <div>
+            <h1> Add Instructor </h1>
              <Form name="basic">
-      <Form.Item
-        label="Name"
-        name="name"
-        rules={[{ required: true, message: 'Please input your name!' }]}
-      >
-        <Input onChange={(value) => setName(value)} />
-      </Form.Item>
+                 <Row gutter={16} >
+                     <Col span={6} xs={24} md={6}> 
+                     <Form.Item
+                        label="Name"
+                        name="name"
+                        rules={[{ required: true, message: 'Please input your name!' }]}
+                        
+                    >
+                        <Input onChange={(e) => setName(e.target.value)} />
+                    </Form.Item>
+                      </Col>
+                      <Col span={6} xs={24} md={6}>
+                      <Form.Item
+                        label="Subscription Date"
+                        name="subscriptionDate"
+                        rules={[{ required: true, message: 'Please input your subscriptionDate!' }]}
+                    >
+                        <DatePicker onChange={(value) => setSubscriptionDate(value)} />
+                    </Form.Item>
+                      </Col>
+                 </Row>
 
-      <Form.Item
-        label="Subscription Date"
-        name="subscriptionDate"
-        rules={[{ required: true, message: 'Please input your subscriptionDate!' }]}
-      >
-        <Input onChange={(value) => setSubscriptionDate(value)} />
-      </Form.Item>
+                 <Row gutter={16}>
+                     <Col span={6} xs={24} md={6}>
+                     <Form.Item label="Time Table"  name="timeTable">
+                        <Input onChange={(e) => setTimeTable(e.target.value)} />
 
-      <Form.Item label="Time Table"  name="timeTable">
-        <DatePicker onChange={(value) => setTimeTable(value)} />
-      </Form.Item>
-
-      <Form.Item
-        label="Number Of Stacks"
-        name="NumberOfStacks"
-        rules={[{ required: true, message: 'Please input your subscriptionDate!' }]}
-      >
-        <Input type="number" onChange={(value) => setNumberOfStacks(value)} />
-      </Form.Item>
-
+                    </Form.Item>
+                     </Col>
+                     <Col span={6} xs={24} md={6}>
+                     <Form.Item
+                        label="Number Of Stacks"
+                        name="NumberOfStacks"
+                        rules={[{ required: true, message: 'Please input your subscriptionDate!' }]}
+                    >
+                        <Input type="number" onChange={(e) => setNumberOfStacks(e.target.value)} />
+                    </Form.Item>
+                     </Col>
+                 </Row>
       <Form.Item >
         <Button type="primary" htmlType="submit" onClick={onsubmit}>
-          Submit
+          Add instructor
         </Button>
       </Form.Item>
     </Form>

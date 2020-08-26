@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Popconfirm } from 'antd';
-import Icon ,{FormOutlined} from '@ant-design/icons'
+import Icon ,{FormOutlined,DeleteOutlined} from '@ant-design/icons'
 
 const style = {
   icon: {
@@ -37,7 +37,7 @@ const Actions = ({ selectUrl, onDelete }) => (
           onConfirm={onDelete}
         >
           <Button type="danger">
-            <Icon style={style.icon} type="close-circle" />
+          <DeleteOutlined />
           </Button>
         </Popconfirm>
       </Col>

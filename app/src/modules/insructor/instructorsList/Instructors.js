@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {Table, Row} from 'antd'
+import {Table, Row,Button} from 'antd'
+import {Link} from 'react-router-dom'
 
 import {fetchInstructor} from './instructors.ducks'
 import {deleteInstructor} from './instructors.ducks'
@@ -15,7 +16,7 @@ export const Instructors = ({fetchInstructor , instructors,deleteInstructor}) =>
     useEffect(() => {
         fetchInstructor().then(() => {
             setInstructors(instructors)
-        })
+        },)
     })
     
     const columns = [
@@ -26,25 +27,27 @@ export const Instructors = ({fetchInstructor , instructors,deleteInstructor}) =>
         },
         {
             title : "Subscribtion Date" ,
-            dataIndex : "subscribtionDate" ,
-            key : "subscribtionDate"
+            dataIndex : "subscriptionDate" ,
+            key : "subscribtionDate",
+            render : (text,record) => {
+                return <span> {new Date(record.subscriptionDate).toLocaleDateString()} </span>
+            }
         },
         {
             title : "Time table" ,
             dataIndex : "timeTable" ,
-            key : "timeTable"
+            key : "timeTable",
         },
         {
             title : "Number of trucks" ,
-            dataIndex : "NumberOfStacks" ,
-            key : "NumberOfStacks"
+            dataIndex : "numberOfStacks" ,
+            key : "numberOfStacks"
         },
         {
             title : "Actions" ,
             key : "actions",
             render : (text,record) => {
                 return <Actions 
-                
                 selectUrl={`/edit/${record._id}`}
                 onDelete={() => {
                   deleteInstructor(record._id);
@@ -58,6 +61,13 @@ export const Instructors = ({fetchInstructor , instructors,deleteInstructor}) =>
             <h3>Instructors List</h3>
             <Row>
                 <Table columns={columns} dataSource={data} />
+            </Row>
+            <Row>
+            <Link to="/new">
+                <Button type="primary" htmlType="submit">
+                    Add instructor
+                </Button>
+            </Link>
             </Row>
         </div>
     )

@@ -6,7 +6,7 @@ const InstructorSchma = new Schema({
     name : {type : String } ,
     subscriptionDate : {type : Date } ,
     timeTable : {type : String } ,
-    NumberOfStacks : {type : String } ,
+    numberOfStacks : {type : String } ,
 })
 
 module.exports = Instructor = mongoose.model("instructors",InstructorSchma)
