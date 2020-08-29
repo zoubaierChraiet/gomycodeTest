@@ -21,3 +21,8 @@ export const getInstructors = async () => {
     return instructors
 }
 
+export const fetchInstructor = async (id) => {
+    const instructor = await axios.get(`/instructors/${id}`)
+    return instructor
+}
+
