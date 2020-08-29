@@ -1,5 +1,4 @@
 import {combineReducers} from 'redux'
-import axios from 'axios' ;
 
 export const FETCH_INSTRUCTOR = "FETCH_INSTRUCTOR" 
 export const EDIT_INSTRUCTOR = "EDIT_INSTRUCTOR"
@@ -35,13 +34,6 @@ export default combineReducers({
     instructor
 })
 
-// export const fetchInstructor = (id) => async dispatsh => {
-//     const instructor = await axios.get(`/instructors/${id}`)
-//     dispatsh({
-//         type : FETCH_INSTRUCTOR ,
-//         payload : instructor.data
-//     })
-// }
 
 export const fetchInstructor = (id) =>{
     return {
