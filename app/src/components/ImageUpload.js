@@ -39,7 +39,7 @@ const  ImageUpload = (props) => {
     const uploadButton = (
       <div>
         <Icon type={loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Sélectionner</div>
+        <div className="ant-upload-text">Select</div>
       </div>
     );
 
@@ -67,7 +67,7 @@ const  ImageUpload = (props) => {
           )}
         </Upload>
         {!props.disabled && imageUrl && (
-          <Button onClick={clear}>Effacer</Button>
+          <Button onClick={clear}>Delete</Button>
         )}
       </React.Fragment>
     );
