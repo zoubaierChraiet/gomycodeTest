@@ -7,6 +7,10 @@ export function* fetchInstructorsWatcher() {
 }
 
 export function* fetchInstructorsWorker(action) {
-    const instructor = yield call(fetchInstructor,action.payload)
-    yield put(setInstructor(instructor))
+    try {
+        const instructor = yield call(fetchInstructor,action.payload)
+        yield put(setInstructor(instructor))
+    } catch(err){
+        yield put({type : "FETCH_FAILED" , payload:err})
+    }
 }

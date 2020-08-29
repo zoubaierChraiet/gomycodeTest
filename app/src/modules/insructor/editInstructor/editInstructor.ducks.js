@@ -5,8 +5,10 @@ export const EDIT_INSTRUCTOR = "EDIT_INSTRUCTOR"
 export const EDITED_INSTRUCTOR = "EDITED_INSTRUCTOR"
 const EDIT_FAILED = "EDIT_FAILED"
 const SET_INSTRUCTOR = "SET_INSTRUCTOR"
+const FETCH_FAILED = "FETCH_FAILED"
 
-const loading = (state=false,{type,payload}) => {
+
+const loading = (state=false,{type}) => {
     switch (type)  {
         case EDIT_INSTRUCTOR :
         case FETCH_INSTRUCTOR :
@@ -14,6 +16,7 @@ const loading = (state=false,{type,payload}) => {
         case EDITED_INSTRUCTOR :
         case EDIT_FAILED :
         case SET_INSTRUCTOR :
+        case FETCH_FAILED :
             return false
         default : 
         return state
@@ -29,9 +32,19 @@ const instructor = (state=null,{type,payload}) => {
     }
 }
 
+const error = (state=null,{type,payload}) => {
+    switch (type)  {
+        case FETCH_FAILED :
+            return payload
+        default : 
+        return state
+    }
+}
+
 export default combineReducers({
     loading ,
-    instructor
+    instructor,
+    error
 })
 
 

@@ -11,6 +11,6 @@ export function* loadInstructorsWorker() {
         const instructors =  yield call(getInstructors)
         yield put(setInstructors(instructors))
     } catch(err){
-        yield put(loadFailed())
+        yield put(loadFailed(err))
     }
 }

@@ -33,7 +33,16 @@ const instructorsList = (state=null,{type,payload}) => {
     }
 }
 
-export default combineReducers({loading , instructorsList})
+const error = (state = null , {type,payload}) => {
+    switch(type){
+        case LOAD_FAILED :
+            return payload ;
+        default :
+            return state
+    }
+}
+
+export default combineReducers({loading , instructorsList , error})
 
 
 export const deleteInstructor = (id) => {
@@ -63,9 +72,10 @@ export const setInstructors = (instructors) => {
     }
 }
 
-export const loadFailed = () => {
+export const loadFailed = (err) => {
     return {
         type : LOAD_FAILED,
+        payload : err
     }
 }
 

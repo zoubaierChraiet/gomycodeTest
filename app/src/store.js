@@ -1,5 +1,3 @@
-import  promiseMiddleware from 'redux-promise-middleware';
-import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import {createLogger} from "redux-logger"
 import createSaga from "redux-saga"
@@ -10,8 +8,6 @@ import {rootSaga} from "./saga/rootSaga"
 const sagaMiddleware = createSaga() ;
 
 const middleware = applyMiddleware(
-  promiseMiddleware(),
-  thunk,
   sagaMiddleware,
   createLogger()
 );

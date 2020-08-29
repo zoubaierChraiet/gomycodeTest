@@ -1,14 +1,14 @@
 import React,{useState,useEffect} from 'react'
 import PropTypes from "prop-types"
 import { connect } from 'react-redux'
-import { message, Spin} from "antd"
+import { message, Spin , notification} from "antd"
 import moment from 'moment'
 
 import Form from "../form/Form"
 
 import {fetchInstructor,editInstructor} from "./editInstructor.ducks"
 
-export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor ,match:{params : {id}} ,loading}) => {
+export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor ,match:{params : {id}} ,loading , error}) => {
 
     const [instructor,setInstructor] = useState({})
 
@@ -23,7 +23,14 @@ export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor
                 return fetchedInstructor
             })
         }
-    },[fetchedInstructor])
+        if(error){
+            notification.error({
+                message: 'Internal server error',
+                description:
+                  'Please try again later',
+              });
+        }
+    },[fetchedInstructor,error])
     
     const onSubmit = () => {
         editInstructor(instructor)
@@ -35,6 +42,7 @@ export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor
             return {...prev,...value}
         })
     }
+
 
     return (
         <div style={{margin:"135px auto"}}>
@@ -60,7 +68,8 @@ EditInstructor.propTypes = {
 
 const mapStateToProps = ({instructors}) => ({
     fetchedInstructor : instructors.edit.instructor,
-    loading : instructors.edit.loading
+    loading : instructors.edit.loading ,
+    error : instructors.edit.error
 })
 
 const mapDispatchToProps = {

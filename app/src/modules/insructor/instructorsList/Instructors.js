@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {Table, Row,Button} from 'antd'
+import {Table, Row,Button,notification} from 'antd'
 import {Link} from 'react-router-dom'
 
 import {loadInstructors,deleteInstructor} from './instructors.ducks'
@@ -11,7 +11,7 @@ import Avatar from 'antd/lib/avatar/avatar'
 
 
 
-export const Instructors = ({loadInstructors , instructors , deleteInstructor , loading}) => {
+export const Instructors = ({loadInstructors , instructors , deleteInstructor , loading ,error}) => {
 
     const [data , setInstructors] = useState([])
 
@@ -22,7 +22,14 @@ export const Instructors = ({loadInstructors , instructors , deleteInstructor , 
 
     useEffect(() => {
         setInstructors(instructors)
-    },[instructors])
+        if(error){
+            notification.error({
+                message: 'Internal server error',
+                description:
+                  'Please try again later',
+              });
+        }
+    },[instructors,error])
 
 
     const columns = [
@@ -97,7 +104,8 @@ Instructors.propTypes = {
 
 const mapStateToProps = ({instructors}) => ({
     instructors : instructors.list.instructorsList ,
-    loading : instructors.list.loading
+    loading : instructors.list.loading ,
+    error : instructors.list.error
 })
 
 const mapDispatchToProps = {
