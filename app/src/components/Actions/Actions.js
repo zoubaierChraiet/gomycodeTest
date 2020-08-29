@@ -1,14 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Popconfirm } from 'antd';
 import Icon ,{FormOutlined,DeleteOutlined} from '@ant-design/icons'
-
-const style = {
-  icon: {
-    fontSize: '1.2rem'
-  }
-};
 
 const Actions = ({ selectUrl, onDelete }) => (
   <Row
@@ -44,10 +37,5 @@ const Actions = ({ selectUrl, onDelete }) => (
   
   </Row>
 );
-
-Actions.propTypes = {
-  selectUrl: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired
-};
 
 export default Actions;

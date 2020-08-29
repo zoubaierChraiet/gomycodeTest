@@ -1,12 +1,18 @@
 import {combineReducers} from 'redux'
 import axios from 'axios' ;
 
-const FETCH_INSTRUCTOR = "FETCH_INSTRUCTOR" 
-const EDIT_INSTRUCTOR = "EDIT_INSTRUCTOR"
+export const FETCH_INSTRUCTOR = "FETCH_INSTRUCTOR" 
+export const EDIT_INSTRUCTOR = "EDIT_INSTRUCTOR"
+export const EDITED_INSTRUCTOR = "EDITED_INSTRUCTOR"
+const EDIT_FAILED = "EDIT_FAILED"
 
-const loading = (state=true,{type,payload}) => {
+const loading = (state=false,{type,payload}) => {
     switch (type)  {
+        case EDIT_INSTRUCTOR :
+            return true
         case FETCH_INSTRUCTOR :
+        case EDITED_INSTRUCTOR :
+        case EDIT_FAILED :
             return false
         default : 
         return state
@@ -35,10 +41,21 @@ export const fetchInstructor = (id) => async dispatsh => {
     })
 }
 
-export const editInstructor = (instructor,id) => async dispatsh => {
-    const instructor = await axios.post(`/instructors/edit/${id}`,instructor)
-    dispatsh({
+export const editInstructor = (instructor) => {
+    return {
         type : EDIT_INSTRUCTOR ,
         payload : instructor
-    })
+    }
+}
+
+export const editedInstructor = () => {
+    return {
+        type : EDITED_INSTRUCTOR ,
+    }
+}
+
+export const editFailed = () => {
+    return {
+        type : EDIT_FAILED ,
+    }
 }

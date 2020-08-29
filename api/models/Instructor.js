@@ -7,6 +7,7 @@ const InstructorSchma = new Schema({
     subscriptionDate : {type : Date } ,
     timeTable : {type : String } ,
     numberOfStacks : {type : String } ,
+    photo : {type : String}
 })
 
 module.exports = Instructor = mongoose.model("instructors",InstructorSchma)

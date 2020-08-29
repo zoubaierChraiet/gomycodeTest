@@ -1,10 +1,7 @@
 import {combineReducers} from 'redux'
 
-import instructors from './modules/insructor/instructorsList/instructors.ducks'
-import edit from './modules/insructor/editInstructor/editInstructor.ducks'
-
+import instructors from './modules/insructor/instructorsReducer'
 
 export default combineReducers({
 instructors,
-edit
 })

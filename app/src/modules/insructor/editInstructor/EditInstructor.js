@@ -1,104 +1,66 @@
 import React,{useState,useEffect} from 'react'
+import PropTypes from "prop-types"
 import { connect } from 'react-redux'
-import {Form , Input,Button ,Col, DatePicker, Row} from "antd"
+import { message, Spin} from "antd"
+import moment from 'moment'
 
+import Form from "../form/Form"
 
 import {fetchInstructor,editInstructor} from "./editInstructor.ducks"
 
-export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor ,match} ) => {
+export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor ,match:{params : {id}} ,loading}) => {
 
-    const [instructor , setInstructor] = useState(null)
-    const [name,setName] = useState("")
-    const [subscriptionDate,setSubscriptionDate] = useState("")
-    const [timeTable,setTimeTable] = useState("")
-    const [numberOfStacks,setNumberOfStacks] = useState("")
+    const [instructor,setInstructor] = useState({})
 
     useEffect(() => {
-        fetchInstructor(match.params.id)
+        fetchInstructor(id)
     },[]) 
 
     useEffect(() => {
-        setInstructor(fetchedInstructor)
-    } , [fetchedInstructor])
-
-
-    useEffect(() => {
-        setName(instructor && instructor.name)
-        setSubscriptionDate(instructor && instructor.subscriptionDate)
-        setTimeTable(instructor && instructor.timeTable)
-        setNumberOfStacks(instructor && instructor.numberOfStacks)
-    } ,[instructor])
-
-
-    onsubmit = () => {
-        const newInstructor = {
-            name,
-            subscriptionDate,
-            timeTable,
-            numberOfStacks
+        if(fetchedInstructor){
+            fetchedInstructor.subscriptionDate = moment(fetchedInstructor.subscriptionDate)
+            setInstructor(prev => {
+                return fetchedInstructor
+            })
         }
-        editInstructor(newInstructor,match.params.id) ;
+    },[fetchedInstructor])
+    
+    const onSubmit = () => {
+        editInstructor(instructor)
+        message.success("Instructor updated successfully")
     }
 
+    const onChange = (value) => {
+        setInstructor(prev => {
+            return {...prev,...value}
+        })
+    }
 
     return (
-        <div>
-            {instructor && (
-                <div>
-                <h3> Edit instructor </h3>
-                <Form name="basic">
-                 <Row gutter={16} >
-                     <Col span={6} xs={24} md={6}> 
-                     <Form.Item
-                        label="Name"
-                        name="name"
-                        rules={[{ required: true, message: 'Please input your name!' }]}
-                        
-                    >
-                        <Input onChange={(e) => setName(e.target.value)} value={name} />
-                    </Form.Item>
-                      </Col>
-                      <Col span={6} xs={24} md={6}>
-                      <Form.Item
-                        label="Time Table"
-                        name="timeTable"
-                        rules={[{ required: true, message: 'Please input your subscriptionDate!' }]}
-                    >
-                        <Input onChange={(e) => (e.target.value)}  value={subscriptionDate} />
-                    </Form.Item>
-                      </Col>
-                 </Row>
-
-                 <Row gutter={16}>
-                     <Col span={6} xs={24} md={6}>
-                     <Form.Item label="Subscription Date"  name="subscriptionDate">
-                        <DatePicker onChange={(value) => setSubscriptionDate(value)} value={timeTable}  />
-                    </Form.Item>
-                     </Col>
-                     <Col span={6} xs={24} md={6}>
-                     <Form.Item
-                        label="Number Of Stacks"
-                        name="NumberOfStacks"
-                        rules={[{ required: true, message: 'Please input your subscriptionDate!' }]}
-                    >
-                        <Input type="number" onChange={(e) => setNumberOfStacks(e.target.value)} value={numberOfStacks}  />
-                    </Form.Item>
-                     </Col>
-                 </Row>
-                    <Form.Item >
-                        <Button type="primary" htmlType="submit" onClick={onsubmit}>
-                         Edit instructor
-                        </Button>
-                    </Form.Item>
-                </Form>
-                </div>
-            )}
+        <div style={{margin:"135px auto"}}>
+            <h1> Edit instructor </h1>
+            <Spin spinning={loading} >
+                <Form 
+                    value={instructor} 
+                    onChange={onChange} 
+                    onSubmit={onSubmit} 
+                    mode="edit" 
+                />
+            </Spin>
         </div>
     )
 }
 
-const mapStateToProps = ({edit}) => ({
-    fetchedInstructor : edit.instructor
+EditInstructor.propTypes = {
+    fetchedInstructor : PropTypes.object ,
+    loading : PropTypes.bool ,
+    fetchInstructor : PropTypes.func ,
+    editInstructor : PropTypes.func ,
+}
+
+const mapStateToProps = ({instructors}) => ({
+    fetchedInstructor : instructors.edit.instructor,
+    loading : instructors.edit.loading
 })
 
 const mapDispatchToProps = {

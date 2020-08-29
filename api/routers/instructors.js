@@ -20,7 +20,8 @@ router.post("/new" , (req,res) => {
         name : req.body.name ,
         subscriptionDate : req.body.subscriptionDate,
         timeTable : req.body.timeTable ,
-        numberOfStacks : req.body.numberOfStacks
+        numberOfStacks : req.body.numberOfStacks,
+        photo : req.body.photo
     })
     newInstructor.save()
     .then(instructor => {
@@ -34,7 +35,8 @@ router.post("/edit/:id" , (req,res) => {
         name : req.body.name ,
         subscriptionDate : req.body.subscriptionDate,
         timeTable : req.body.timeTable ,
-        NumberOfStacks : req.body.NumberOfStacks
+        numberOfStacks : req.body.numberOfStacks,
+        photo : req.body.photo
     })
     .then(instructor => {
         if(instructor) {

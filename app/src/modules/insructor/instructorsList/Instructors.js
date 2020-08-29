@@ -4,22 +4,36 @@ import { connect } from 'react-redux'
 import {Table, Row,Button} from 'antd'
 import {Link} from 'react-router-dom'
 
-import {fetchInstructor} from './instructors.ducks'
-import {deleteInstructor} from './instructors.ducks'
+import {loadInstructors,deleteInstructor} from './instructors.ducks'
 
 import Actions from '../../../components/Actions/Actions'
+import Avatar from 'antd/lib/avatar/avatar'
 
-export const Instructors = ({fetchInstructor , instructors,deleteInstructor}) => {
+
+
+export const Instructors = ({loadInstructors , instructors , deleteInstructor , loading}) => {
 
     const [data , setInstructors] = useState([])
 
+
     useEffect(() => {
-        fetchInstructor().then(() => {
-            setInstructors(instructors)
-        },)
-    })
-    
+        loadInstructors()
+    },[])
+
+    useEffect(() => {
+        setInstructors(instructors)
+    },[instructors])
+
+
     const columns = [
+        {
+            title : "Photo" ,
+            dataIndex : "photo" ,
+            key : "photo",
+            render : (text,record) => {
+                return <Avatar src={record.photo} />
+            }
+        },
         {
             title : "Instructor" ,
             dataIndex : "name" ,
@@ -60,7 +74,7 @@ export const Instructors = ({fetchInstructor , instructors,deleteInstructor}) =>
         <div style={{margin : "auto"}}>
             <h3>Instructors List</h3>
             <Row>
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={data} loading={loading} />
             </Row>
             <Row>
             <Link to="/new">
@@ -74,15 +88,20 @@ export const Instructors = ({fetchInstructor , instructors,deleteInstructor}) =>
 }
 
 Instructors.propTypes = {
-    prop: PropTypes
+    prop: PropTypes,
+    instructors : PropTypes.arrayOf(PropTypes.object),
+    loading : PropTypes.bool,
+    loadInstructors : PropTypes.func,
+    deleteInstructor : PropTypes.func,
 }
 
 const mapStateToProps = ({instructors}) => ({
-    instructors : instructors.instructorsList
+    instructors : instructors.list.instructorsList ,
+    loading : instructors.list.loading
 })
 
 const mapDispatchToProps = {
-    fetchInstructor,
+    loadInstructors,
     deleteInstructor
 }
 
