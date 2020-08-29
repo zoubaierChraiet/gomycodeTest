@@ -7,10 +7,10 @@ export function* loadInstructorsWatcher() {
 }
 
 export function* loadInstructorsWorker() {
-    try {
-        const instructors =  yield call(getInstructors)
+    const {instructors,err} =  yield call(getInstructors)
+    if(instructors){
         yield put(setInstructors(instructors))
-    } catch(err){
+    } else {
         yield put(loadFailed(err))
     }
 }

@@ -3,9 +3,9 @@ import {combineReducers} from 'redux'
 export const DELETE_INSTRUCTOR = "DELETE_INSTRUCTOR"
 export const LOAD_INSTRUCTORS = "LOAD_INSTRUCTORS"
 export const SET_INSTRUCTORS = "SET_INSTRUCTORS"
+export const DELETE_FAILED = "DELETE_FAILED"
 const DELETED_INSTRUCTOR = "DELETED_INSTRUCTOR"
 const LOAD_FAILED = "LOAD_FAILED"
-const DELETE_FAILED = "DELETE_FAILED"
 
 const loading = (state=false,{type}) => {
     switch (type)  {
@@ -28,6 +28,8 @@ const instructorsList = (state=null,{type,payload}) => {
             return payload.data ;
         case DELETE_INSTRUCTOR :
                 return state.filter(instructor => instructor._id !== payload) ;
+        case DELETE_FAILED :
+                return [] ;
         default : 
             return state
     }
@@ -36,6 +38,8 @@ const instructorsList = (state=null,{type,payload}) => {
 const error = (state = null , {type,payload}) => {
     switch(type){
         case LOAD_FAILED :
+            return payload ;
+        case DELETE_FAILED :
             return payload ;
         default :
             return state
@@ -76,11 +80,5 @@ export const loadFailed = (err) => {
     return {
         type : LOAD_FAILED,
         payload : err
-    }
-}
-
-export const deleteFailed = () => {
-    return {
-        type : DELETE_FAILED,
     }
 }

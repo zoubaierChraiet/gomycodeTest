@@ -11,14 +11,14 @@ export const editInstructor = async (instructor) => {
 }
 
 export const deleteInstructor = async (id) => {
-    console.log(id)
     const deletedInstructor = await axios.delete(`/instructors/delete/${id}`)
     return deletedInstructor
 }
 
 export const getInstructors = async () => {
-    const instructors = await axios.get("/instructors")
-    return instructors
+    return axios.get("/instructors")
+    .then(instructors => ({instructors}))
+    .catch(err => ({err}))
 }
 
 export const fetchInstructor = async (id) => {

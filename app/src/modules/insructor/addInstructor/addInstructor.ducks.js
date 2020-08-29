@@ -17,8 +17,18 @@ const loading = (state=false,{type}) => {
     }
 }
 
+const error = (state=null , {type , payload}) => {
+    switch(type){
+        case ADD_FAILED :
+            return payload ;
+        default : 
+            return state
+    }
+}
+
 export default combineReducers({
-    loading
+    loading,
+    error
 })
 
 export const addInstructor = (instructor) => {
@@ -34,8 +44,9 @@ export const addedInstructor = () => {
     }
 }
 
-export const addFailed = () => {
+export const addFailed = (err) => {
     return {
         type : ADD_FAILED ,
+        payload : err
     }
 }

@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect} from 'react-redux'
-import {message, Spin} from "antd"
+import {Spin} from "antd"
 
 import {addInstructor} from "./addInstructor.ducks"
 
@@ -13,7 +13,6 @@ export const AddInstructor = ({addInstructor , history : {push} , loading}) => {
     
     const onSubmit = () => {
         addInstructor(instructor)
-        message.success("Instructor added successfully")
         push("/")
     }
 

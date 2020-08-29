@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import PropTypes from "prop-types"
 import { connect } from 'react-redux'
-import { message, Spin , notification} from "antd"
+import { Spin , notification} from "antd"
 import moment from 'moment'
 
 import Form from "../form/Form"
@@ -34,7 +34,6 @@ export const EditInstructor = ({fetchInstructor,fetchedInstructor,editInstructor
     
     const onSubmit = () => {
         editInstructor(instructor)
-        message.success("Instructor updated successfully")
     }
 
     const onChange = (value) => {

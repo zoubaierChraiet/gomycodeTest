@@ -26,7 +26,8 @@ const loading = (state=false,{type}) => {
 const instructor = (state=null,{type,payload}) => {
     switch (type)  {
         case SET_INSTRUCTOR :
-            return payload
+        case EDIT_FAILED :
+            return payload 
         default : 
         return state
     }
@@ -35,6 +36,7 @@ const instructor = (state=null,{type,payload}) => {
 const error = (state=null,{type,payload}) => {
     switch (type)  {
         case FETCH_FAILED :
+        case EDIT_FAILED :
             return payload
         default : 
         return state
@@ -75,8 +77,9 @@ export const editedInstructor = () => {
     }
 }
 
-export const editFailed = () => {
+export const editFailed = (err) => {
     return {
         type : EDIT_FAILED ,
+        payload : err
     }
 }

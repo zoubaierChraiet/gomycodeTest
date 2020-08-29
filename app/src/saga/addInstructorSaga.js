@@ -11,6 +11,6 @@ export function* addInstructorsWorker(action) {
         yield call(addInstructor,action.payload)
         yield put(addedInstructor())
     } catch(err){
-        yield put(addFailed())
+        yield put(addFailed(err))
     }
 }
