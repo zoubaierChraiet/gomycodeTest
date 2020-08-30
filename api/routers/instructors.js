@@ -15,7 +15,7 @@ router.get("/" , (req,res) => {
     })
 })
 
-router.post("/new" , (req,res) => {
+router.post("/newInstructor" , (req,res) => {
     const newInstructor = new Instructor({
         name : req.body.name ,
         subscriptionDate : req.body.subscriptionDate,
@@ -30,7 +30,7 @@ router.post("/new" , (req,res) => {
     .catch(err => console.log(err))
 })
 
-router.post("/edit/:id" , (req,res) => {
+router.post("/editInstructor/:id" , (req,res) => {
     Instructor.findByIdAndUpdate({_id : req.params.id} ,{
         name : req.body.name ,
         subscriptionDate : req.body.subscriptionDate,
@@ -48,7 +48,7 @@ router.post("/edit/:id" , (req,res) => {
     .catch(err => console.log(err))
 })
 
-router.delete("/delete/:id" , (req,res) => {
+router.delete("/deleteInstructor/:id" , (req,res) => {
     Instructor.findByIdAndDelete({_id : req.params.id})
     .then(() => {
         res.status(200).json({success : true})

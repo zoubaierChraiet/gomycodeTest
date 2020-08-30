@@ -1,17 +1,17 @@
 import axios from "axios"
 
 export const addInstructor = async (instructor) => {
-    const addedInstructor = await axios.post("/instructors/new",instructor) ;
+    const addedInstructor = await axios.post("/instructors/newInstructor",instructor) ;
     return addedInstructor
 }
 
 export const editInstructor = async (instructor) => {
-    const editedInstructor = await axios.post(`/instructors/edit/${instructor._id}`,instructor)
+    const editedInstructor = await axios.post(`/instructors/editInstructor/${instructor._id}`,instructor)
     return editedInstructor
 }
 
 export const deleteInstructor = async (id) => {
-    const deletedInstructor = await axios.delete(`/instructors/delete/${id}`)
+    const deletedInstructor = await axios.delete(`/instructors/deleteInstructor/${id}`)
     return deletedInstructor
 }
 
